@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "549164358595",
+    "project_id": "radio-app-71d86",
+    "storage_bucket": "radio-app-71d86.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:549164358595:android:524086f49740f86a7b7b76",
+        "android_client_info": {
+          "package_name": "com.example.desafio_radio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "549164358595-5ju91u69ldj56mdfneol4li1qpfvuudu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.desafio_radio",
+            "certificate_hash": "3c0366568904088261057a6c528c51afde213005"
+          }
+        },
+        {
+          "client_id": "549164358595-9v9mkeo4j9p6v52hfn8489lt9v7lhq2k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8xhrIzetD6HmvSi4V7SYs-5uLY1_Y5a0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "549164358595-9v9mkeo4j9p6v52hfn8489lt9v7lhq2k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "549164358595-ldml1cedc21ai4u8hhv565qfe2dlqd8c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.desafioRadio"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
