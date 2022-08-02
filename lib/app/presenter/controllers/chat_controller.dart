@@ -20,11 +20,13 @@ class ChatController extends Cubit {
     }
   }
 
-  Future<void> sendMessage() async {
+  Future<void> sendMessage(Map<String, dynamic> message) async {
     emit(ChatLoading());
 
     try {
-      final data = await service.sendMessage(message);
+      final data = await service.sendMessage();
+
+      emit(ChatSendMessage(data));
     } catch (e) {
       emit(ChatError(
         e.toString(),

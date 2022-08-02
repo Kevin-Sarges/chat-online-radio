@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class ChatState {}
 
@@ -10,6 +10,12 @@ class ChatSucess extends ChatState {
   Object? object;
 
   ChatSucess(this.object);
+}
+
+class ChatSendMessage extends ChatState {
+  DocumentReference<Map<String, dynamic>> data;
+
+  ChatSendMessage(this.data);
 }
 
 class ChatError extends ChatState {
