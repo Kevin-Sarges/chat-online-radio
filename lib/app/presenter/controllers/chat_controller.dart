@@ -6,6 +6,16 @@ class ChatController extends Cubit {
   final service = ChatServices();
   ChatController() : super(ChatInital());
 
+  Future<void> loggerIn(bool isLoggerIn) async {
+    emit(ChatLoading());
+
+    try {
+      emit(ChatIsLoggerIn(isLoggerIn));
+    } catch (e) {
+      emit(ChatError(e.toString()));
+    }
+  }
+
   Future<void> listMessage() async {
     emit(ChatLoading());
 

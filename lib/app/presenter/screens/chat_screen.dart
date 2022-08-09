@@ -8,7 +8,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  TextEditingController text = TextEditingController();
+  final TextEditingController _textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +54,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: [
                   Expanded(
                     child: TextField(
+                      controller: _textController,
                       decoration: InputDecoration(
                         labelText: 'Envie uma menssagem',
                         border: OutlineInputBorder(

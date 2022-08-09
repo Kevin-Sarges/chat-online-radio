@@ -18,6 +18,12 @@ class ChatSendMessage extends ChatState {
   ChatSendMessage(this.data);
 }
 
+class ChatIsLoggerIn extends ChatState {
+  bool isLoggerIn;
+
+  ChatIsLoggerIn(this.isLoggerIn);
+}
+
 class ChatError extends ChatState {
   String message;
 
