@@ -1,3 +1,5 @@
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'package:desafio_radio/app/presenter/controllers/chat_controller.dart';
 import 'package:desafio_radio/app/presenter/controllers/chat_state.dart';
 import 'package:flutter/material.dart';

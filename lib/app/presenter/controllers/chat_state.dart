@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dartz/dartz.dart';
+import 'package:desafio_radio/app/domain/error/erro.dart';
 
 abstract class ChatState {}
 
@@ -19,7 +21,7 @@ class ChatSendMessage extends ChatState {
 }
 
 class ChatIsLoggerIn extends ChatState {
-  bool isLoggerIn;
+  Either<ErrorMessage, bool> isLoggerIn;
 
   ChatIsLoggerIn(this.isLoggerIn);
 }
