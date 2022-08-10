@@ -1,7 +1,7 @@
-class Error implements Exception {
+class ErrorMessage implements Exception {
   final String message;
 
-  Error(this.message);
+  ErrorMessage(this.message);
 
   @override
   String toString() => 'AuthException(message: $message)';

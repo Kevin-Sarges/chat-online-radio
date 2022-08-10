@@ -7,7 +7,7 @@ class GoogleAuthFirebase {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  Future<Either<Error, bool>> isLoggerIn() async {
+  Future<Either<ErrorMessage, bool>> isLoggerIn() async {
     try {
       bool isLoggerIn = await googleSignIn.isSignedIn();
 
@@ -16,16 +16,16 @@ class GoogleAuthFirebase {
       } else {
         return const Right(false);
       }
-    } on Error catch (e) {
+    } on ErrorMessage catch (e) {
       return Left(e);
     } on Exception {
       return Left(
-        Error('Exception'),
+        ErrorMessage('Exception'),
       );
     }
   }
 
-  Future<Either<Error, UserCredential>> signIn() async {
+  Future<Either<ErrorMessage, UserCredential>> signIn() async {
     try {
       final GoogleSignInAccount? _googleSignUser = await googleSignIn.signIn();
       final GoogleSignInAuthentication? _googleAuth =
@@ -39,11 +39,11 @@ class GoogleAuthFirebase {
       final userSignIn = await firebaseAuth.signInWithCredential(credential);
 
       return Right(userSignIn);
-    } on Error catch (e) {
+    } on ErrorMessage catch (e) {
       return Left(e);
     } on Exception {
       return Left(
-        Error('Exception'),
+        ErrorMessage('Exception'),
       );
     }
   }

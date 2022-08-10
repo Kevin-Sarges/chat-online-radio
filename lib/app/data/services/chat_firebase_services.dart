@@ -6,7 +6,7 @@ class ChatServices {
   final FirebaseFirestore db = FirebaseFirestore.instance;
   final Map<String, dynamic> message = {};
 
-  Future<Either<Error, QuerySnapshot>> getMessage() async {
+  Future<Either<ErrorMessage, QuerySnapshot>> getMessage() async {
     try {
       final getMessage = await db
           .collection('chatmessage')
@@ -14,11 +14,11 @@ class ChatServices {
           .get();
 
       return Right(getMessage);
-    } on Error catch (e) {
+    } on ErrorMessage catch (e) {
       return Left(e);
     } on Exception {
       return Left(
-        Error('Exception'),
+        ErrorMessage('Exception'),
       );
     }
   }

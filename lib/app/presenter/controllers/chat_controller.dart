@@ -1,16 +1,19 @@
 import 'package:desafio_radio/app/data/services/chat_firebase_services.dart';
+import 'package:desafio_radio/app/data/services/google_auth_services.dart';
 import 'package:desafio_radio/app/presenter/controllers/chat_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatController extends Cubit {
   final service = ChatServices();
+  final isLoagger = GoogleAuthFirebase();
   ChatController() : super(ChatInital());
 
-  Future<void> loggerIn(bool isLoggerIn) async {
+  Future<void> loggerIn() async {
     emit(ChatLoading());
 
     try {
-      emit(ChatIsLoggerIn(isLoggerIn));
+      final loggerIn = await isLoagger.isLoggerIn();
+      emit(ChatIsLoggerIn(loggerIn));
     } catch (e) {
       emit(ChatError(e.toString()));
     }
@@ -25,7 +28,7 @@ class ChatController extends Cubit {
       emit(ChatSucess(result));
     } catch (e) {
       emit(ChatError(
-        e.toString(),
+        'Nenhuma mesagens no momento!!',
       ));
     }
   }
@@ -39,7 +42,7 @@ class ChatController extends Cubit {
       emit(ChatSendMessage(data));
     } catch (e) {
       emit(ChatError(
-        e.toString(),
+        'erro ao enviar mensagem!!',
       ));
     }
   }
