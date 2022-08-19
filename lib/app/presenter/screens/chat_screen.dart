@@ -1,5 +1,6 @@
 // ignore_for_file: unrelated_type_equality_checks
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:desafio_radio/app/presenter/controllers/chat_controller.dart';
 import 'package:desafio_radio/app/presenter/controllers/chat_state.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,8 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  List<QueryDocumentSnapshot> listMessages = [];
+
   final chatController = ChatController();
   final TextEditingController _textController = TextEditingController();
 
@@ -49,33 +52,31 @@ class _ChatScreenState extends State<ChatScreen> {
             }
 
             if (state is ChatIsLoggerIn) {
-              if (state.isLoggerIn == false) {
-                Center(
-                  child: Column(
-                    children: [
-                      const Text(
-                        'Faça login com uma conta google\npara ter acesso ao chat',
+              return Center(
+                child: Column(
+                  children: [
+                    const Text(
+                      'Faça login com uma conta google\npara ter acesso ao chat',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'Login com google',
                         style: TextStyle(
                           fontSize: 16,
                         ),
-                        textAlign: TextAlign.center,
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Login com google',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              }
+                    ),
+                  ],
+                ),
+              );
             }
 
             if (state is ChatSucess) {
@@ -84,7 +85,36 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: [
                   Expanded(
                     flex: 2,
-                    child: Container(),
+                    child: FutureBuilder<QuerySnapshot>(
+                      // future: chatController.listMessage(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          listMessages = snapshot.data!.docs;
+
+                          if (listMessages.isNotEmpty) {
+                            return ListView.builder(
+                              padding: const EdgeInsets.all(10),
+                              itemCount: snapshot.data?.docs.length,
+                              reverse: true,
+                              itemBuilder: (context, index) => buildItem(
+                                index,
+                                snapshot.data?.docs[index],
+                              ),
+                            );
+                          } else {
+                            return const Center(
+                              child: Text('Sem mensagens...'),
+                            );
+                          }
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 5,
+                            ),
+                          );
+                        }
+                      },
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10),
@@ -117,6 +147,12 @@ class _ChatScreenState extends State<ChatScreen> {
           },
         ),
       ),
+    );
+  }
+
+  Widget buildItem(int index, DocumentSnapshot? document) {
+    return Container(
+      child: const Text('teste'),
     );
   }
 }
