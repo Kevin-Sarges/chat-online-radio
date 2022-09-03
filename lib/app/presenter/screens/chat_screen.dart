@@ -14,8 +14,6 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  List<QueryDocumentSnapshot> listMessages = [];
-
   final chatController = ChatController();
   final TextEditingController _textController = TextEditingController();
 
@@ -51,34 +49,6 @@ class _ChatScreenState extends State<ChatScreen> {
               );
             }
 
-            if (state is ChatIsLoggerIn) {
-              return Center(
-                child: Column(
-                  children: [
-                    const Text(
-                      'Faça login com uma conta google\npara ter acesso ao chat',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Login com google',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-
             if (state is ChatSucess) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -89,9 +59,9 @@ class _ChatScreenState extends State<ChatScreen> {
                       // future: chatController.listMessage(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          listMessages = snapshot.data!.docs;
+                          chatController.listMessages = snapshot.data!.docs;
 
-                          if (listMessages.isNotEmpty) {
+                          if (chatController.listMessages.isNotEmpty) {
                             return ListView.builder(
                               padding: const EdgeInsets.all(10),
                               itemCount: snapshot.data?.docs.length,
@@ -107,9 +77,31 @@ class _ChatScreenState extends State<ChatScreen> {
                             );
                           }
                         } else {
-                          return const Center(
-                            child: CircularProgressIndicator(
-                              strokeWidth: 5,
+                          print(snapshot.hasData);
+
+                          return Center(
+                            child: Column(
+                              children: [
+                                const Text(
+                                  'Faça login com uma conta google\npara ter acesso ao chat',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {},
+                                  child: const Text(
+                                    'Login com google',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           );
                         }

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:desafio_radio/app/domain/error/erro.dart';
 
@@ -12,12 +11,6 @@ class ChatSucess extends ChatState {
   Object? object;
 
   ChatSucess(this.object);
-}
-
-class ChatSendMessage extends ChatState {
-  DocumentReference<Map<String, dynamic>> data;
-
-  ChatSendMessage(this.data);
 }
 
 class ChatIsLoggerIn extends ChatState {
