@@ -8,9 +8,10 @@ class ChatInital extends ChatState {}
 class ChatLoading extends ChatState {}
 
 class ChatSucess extends ChatState {
+  bool isLoggerIn;
   Object? object;
 
-  ChatSucess(this.object);
+  ChatSucess(this.object, this.isLoggerIn);
 }
 
 class ChatIsLoggerIn extends ChatState {
