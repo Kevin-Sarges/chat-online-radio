@@ -14,6 +14,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final chatController = ChatController();
+  final TextEditingController _textController = TextEditingController();
 
   @override
   void initState() {
@@ -52,6 +53,8 @@ class _ChatScreenState extends State<ChatScreen> {
               if (state.isLoggerIn == false) {
                 return Center(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
                         'Faça login com uma conta google\npara ter acesso ao chat',
@@ -64,7 +67,12 @@ class _ChatScreenState extends State<ChatScreen> {
                         height: 20,
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            state.signIn;
+                            state.isLoggerIn = true;
+                          });
+                        },
                         child: const Text(
                           'Login com google',
                           style: TextStyle(
@@ -76,8 +84,36 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 );
               } else {
-                return const Center(
-                  child: Text('okay'),
+                return Column(
+                  children: [
+                    const Expanded(
+                      flex: 2,
+                      child: Text('Chat !!'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: _textController,
+                              decoration: InputDecoration(
+                                labelText: 'Envie uma menssagem',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.send),
+                            color: Colors.blue,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 );
               }
             }

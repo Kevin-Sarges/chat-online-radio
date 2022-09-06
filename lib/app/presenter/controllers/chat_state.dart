@@ -1,6 +1,3 @@
-import 'package:dartz/dartz.dart';
-import 'package:desafio_radio/app/domain/error/erro.dart';
-
 abstract class ChatState {}
 
 class ChatInital extends ChatState {}
@@ -10,14 +7,13 @@ class ChatLoading extends ChatState {}
 class ChatSucess extends ChatState {
   bool isLoggerIn;
   Object? object;
+  bool signIn;
 
-  ChatSucess(this.object, this.isLoggerIn);
-}
-
-class ChatIsLoggerIn extends ChatState {
-  Either<ErrorMessage, bool> isLoggerIn;
-
-  ChatIsLoggerIn(this.isLoggerIn);
+  ChatSucess(
+    this.object,
+    this.isLoggerIn,
+    this.signIn,
+  );
 }
 
 class ChatError extends ChatState {

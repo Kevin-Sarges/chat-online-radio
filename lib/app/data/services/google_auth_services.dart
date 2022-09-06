@@ -1,23 +1,21 @@
-import 'package:desafio_radio/app/domain/error/erro.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:dartz/dartz.dart';
 
 class GoogleAuthFirebase {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
   Future<bool> isLoggerIn() async {
-    try {
-      bool isLoggerIn = await googleSignIn.isSignedIn();
+    bool isLoggerIn = await googleSignIn.isSignedIn();
 
-      return isLoggerIn;
-    } catch (e) {
+    if (isLoggerIn) {
+      return true;
+    } else {
       return false;
     }
   }
 
-  Future<Either<ErrorMessage, UserCredential>> signIn() async {
+  Future<bool> signIn() async {
     try {
       final GoogleSignInAccount? _googleSignUser = await googleSignIn.signIn();
       final GoogleSignInAuthentication? _googleAuth =
@@ -28,15 +26,11 @@ class GoogleAuthFirebase {
         idToken: _googleAuth?.idToken,
       );
 
-      final userSignIn = await firebaseAuth.signInWithCredential(credential);
+      await firebaseAuth.signInWithCredential(credential);
 
-      return Right(userSignIn);
-    } on ErrorMessage catch (e) {
-      return Left(e);
-    } on Exception {
-      return Left(
-        ErrorMessage('Exception'),
-      );
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 }

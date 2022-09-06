@@ -18,8 +18,13 @@ class ChatController extends Cubit<ChatState> {
     try {
       final result = await service.getMessage();
       final loggerIn = await isLoagger.isLoggerIn();
+      final signIn = await isLoagger.signIn();
 
-      emit(ChatSucess(result, loggerIn));
+      emit(ChatSucess(
+        result,
+        loggerIn,
+        signIn,
+      ));
     } catch (e) {
       emit(ChatError(
         'Nenhuma mesagens no momento!!',
