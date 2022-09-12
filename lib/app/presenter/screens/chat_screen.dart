@@ -19,7 +19,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    chatController.listMessage();
+    chatController.checkLogin();
   }
 
   @override
@@ -49,73 +49,70 @@ class _ChatScreenState extends State<ChatScreen> {
               );
             }
 
-            if (state is ChatSucess) {
-              if (state.isLoggerIn == false) {
-                return Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Faça login com uma conta google\npara ter acesso ao chat',
+            if (state is ChatLoginFail) {
+              return Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Faça login com uma conta google\npara ter acesso ao chat',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        chatController.loginUser();
+                      },
+                      child: const Text(
+                        'Login com google',
                         style: TextStyle(
                           fontSize: 16,
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            state.signIn;
-                            state.isLoggerIn = true;
-                          });
-                        },
-                        child: const Text(
-                          'Login com google',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                return Column(
-                  children: [
-                    const Expanded(
-                      flex: 2,
-                      child: Text('Chat !!'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              controller: _textController,
-                              decoration: InputDecoration(
-                                labelText: 'Envie uma menssagem',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.send),
-                            color: Colors.blue,
-                          ),
-                        ],
                       ),
                     ),
                   ],
-                );
-              }
+                ),
+              );
+            }
+
+            if (state is ChatSucess) {
+              return Column(
+                children: [
+                  const Expanded(
+                    flex: 2,
+                    child: Text('Chat !!'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: _textController,
+                            decoration: InputDecoration(
+                              labelText: 'Envie uma menssagem',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.send),
+                          color: Colors.blue,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
             }
 
             return Container();

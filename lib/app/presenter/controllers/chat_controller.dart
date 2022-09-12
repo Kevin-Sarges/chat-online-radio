@@ -12,22 +12,48 @@ class ChatController extends Cubit<ChatState> {
 
   ChatController() : super(ChatInital());
 
-  Future<void> listMessage() async {
+  Future<void> _listMessage() async {
     emit(ChatLoading());
 
     try {
       final result = await service.getMessage();
-      final loggerIn = await isLoagger.isLoggerIn();
-      final signIn = await isLoagger.signIn();
 
-      emit(ChatSucess(
-        result,
-        loggerIn,
-        signIn,
-      ));
+      emit(ChatSucess(result));
     } catch (e) {
       emit(ChatError(
         'Nenhuma mesagens no momento!!',
+      ));
+    }
+  }
+
+  Future<void> loginUser() async {
+    emit(ChatLoading());
+
+    try {
+      final signIn = await isLoagger.signIn();
+
+      _listMessage();
+    } catch (e) {
+      emit(ChatError(
+        'Erro no login !!',
+      ));
+    }
+  }
+
+  Future<void> checkLogin() async {
+    emit(ChatLoading());
+
+    try {
+      final isLoggerIn = await isLoagger.isLoggerIn();
+
+      if (isLoggerIn != null) {
+        _listMessage();
+      } else {
+        emit(ChatLoginFail());
+      }
+    } catch (e) {
+      emit(ChatError(
+        'Erro no login !!',
       ));
     }
   }
