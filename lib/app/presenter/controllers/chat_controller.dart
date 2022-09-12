@@ -30,8 +30,6 @@ class ChatController extends Cubit<ChatState> {
     emit(ChatLoading());
 
     try {
-      final signIn = await isLoagger.signIn();
-
       _listMessage();
     } catch (e) {
       emit(ChatError(

@@ -30,6 +30,12 @@ class _ChatScreenState extends State<ChatScreen> {
           title: const Text('Chat da Radio'),
           centerTitle: true,
           backgroundColor: Colors.red[400],
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.share),
+            ),
+          ],
         ),
         body: BlocBuilder<ChatController, ChatState>(
           bloc: chatController,
