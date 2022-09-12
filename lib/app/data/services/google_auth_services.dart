@@ -5,14 +5,14 @@ class GoogleAuthFirebase {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  Future<bool> isLoggerIn() async {
-    bool isLoggerIn = await googleSignIn.isSignedIn();
+  Future<User?> isLoggerIn() async {
+    User? userIsLoggerIn;
 
-    if (isLoggerIn) {
-      return true;
-    } else {
-      return false;
-    }
+    firebaseAuth.authStateChanges().listen((user) {
+      userIsLoggerIn = user;
+    });
+
+    return userIsLoggerIn;
   }
 
   Future<bool> signIn() async {

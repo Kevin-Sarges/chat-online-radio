@@ -40,26 +40,40 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {},
-                    child: const Text(
-                      'Reproduzir',
+                    child: Row(
+                      children: const [
+                        Icon(Icons.play_arrow),
+                        SizedBox(width: 10),
+                        Text(
+                          'Reproduzir',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
                     ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
-                        vertical: 18,
-                        horizontal: 30,
+                        vertical: 15,
+                        horizontal: 10,
                       ),
                     ),
                   ),
                   ElevatedButton(
                     onPressed: () {},
-                    child: const Text(
-                      'Parar',
+                    child: Row(
+                      children: const [
+                        Icon(Icons.pause),
+                        SizedBox(width: 10),
+                        Text(
+                          'Parar',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
                     ),
                     style: ElevatedButton.styleFrom(
                       primary: Colors.red,
                       padding: const EdgeInsets.symmetric(
-                        vertical: 18,
-                        horizontal: 30,
+                        vertical: 15,
+                        horizontal: 10,
                       ),
                     ),
                   ),

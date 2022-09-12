@@ -6,12 +6,10 @@ class ChatModel extends ChatEntity {
     required String photoUrl,
     required String name,
     required String message,
-    required String timestamp,
   }) : super(
           photoUrl: photoUrl,
           name: name,
           message: message,
-          timestamp: timestamp,
         );
 
   factory ChatModel.fromJson(DocumentSnapshot snapshot) {
@@ -21,7 +19,6 @@ class ChatModel extends ChatEntity {
       photoUrl: data['photoUrl'] as String,
       name: data['name'] as String,
       message: data['message'] as String,
-      timestamp: data['timestamp'] as String,
     );
   }
 
@@ -30,7 +27,6 @@ class ChatModel extends ChatEntity {
       'name': name,
       'message': message,
       'photo': photoUrl,
-      'time': timestamp,
     };
 
     return data;
