@@ -107,10 +107,17 @@ class _ChatScreenState extends State<ChatScreen> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
+                            onSubmitted: (value) {
+                              chatController
+                                  .onSendMessage(_textController.text);
+                            },
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            chatController.onSendMessage(_textController.text);
+                            _textController.text = '';
+                          },
                           icon: const Icon(Icons.send),
                           color: Colors.blue,
                         ),
