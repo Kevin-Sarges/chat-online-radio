@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatServices {
   final FirebaseFirestore db = FirebaseFirestore.instance;
-  final Map<String, dynamic> message = {};
 
   Future<QuerySnapshot> getMessage() async {
     final getMessage = await db
@@ -13,7 +12,7 @@ class ChatServices {
     return getMessage;
   }
 
-  Future<void> sendMessage() {
-    return db.collection('chatmessage').doc('message').set(message);
+  Future<void> sendMessage(String text) {
+    return db.collection('chatmessage').add({'message': text});
   }
 }
