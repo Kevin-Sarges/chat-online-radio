@@ -22,7 +22,7 @@ class ChatModel extends ChatEntity {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     final data = {
       'name': name,
       'message': message,

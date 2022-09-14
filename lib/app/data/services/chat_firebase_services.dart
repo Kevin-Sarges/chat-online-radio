@@ -13,7 +13,7 @@ class ChatServices {
     return getMessage;
   }
 
-  Future<DocumentReference<Map<String, dynamic>>> sendMessage() {
-    return db.collection('chatmessage').add(message);
+  Future<void> sendMessage() {
+    return db.collection('chatmessage').doc('message').set(message);
   }
 }

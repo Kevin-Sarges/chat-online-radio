@@ -53,9 +53,9 @@ class ChatController extends Cubit<ChatState> {
     }
   }
 
-  void onSendMessage(String content) async {
+  Future onSendMessage(String content) async {
     try {
-      final sendMessage = await service.sendMessage();
+      final sendMessage = service.sendMessage();
 
       emit(ChatSucess(sendMessage));
     } catch (e) {
