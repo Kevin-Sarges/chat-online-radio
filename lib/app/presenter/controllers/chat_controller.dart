@@ -13,6 +13,8 @@ class ChatController extends Cubit<ChatState> {
     emit(ChatLoading());
 
     try {
+      await isLoagger.signIn();
+
       _listMessage();
     } catch (e) {
       emit(ChatError(
@@ -28,6 +30,7 @@ class ChatController extends Cubit<ChatState> {
       final isLoggerIn = await isLoagger.isLoggerIn();
 
       if (isLoggerIn != null) {
+        isLoggerIn.displayName;
         _listMessage();
       } else {
         emit(ChatLoginFail());
@@ -53,11 +56,11 @@ class ChatController extends Cubit<ChatState> {
     }
   }
 
-  Future<void> onSendMessage(String text) async {
+  Future<void> onSendMessage({required String text}) async {
     try {
-      final sendMessage = service.sendMessage(text);
+      final result = service.sendMessage(text);
 
-      emit(ChatSucess(sendMessage));
+      emit(ChatSucess(result));
     } catch (e) {
       emit(ChatError('Erro ao enviar mensagem'));
     }

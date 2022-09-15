@@ -4,6 +4,7 @@ import 'package:desafio_radio/app/presenter/controllers/chat_controller.dart';
 import 'package:desafio_radio/app/presenter/controllers/chat_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final googleSignIn = GoogleSignIn().currentUser;
   final chatController = ChatController();
   final TextEditingController _textController = TextEditingController();
 
@@ -108,14 +110,17 @@ class _ChatScreenState extends State<ChatScreen> {
                               ),
                             ),
                             onSubmitted: (value) {
-                              chatController
-                                  .onSendMessage(_textController.text);
+                              chatController.onSendMessage(
+                                text: _textController.text,
+                              );
                             },
                           ),
                         ),
                         IconButton(
                           onPressed: () {
-                            chatController.onSendMessage(_textController.text);
+                            chatController.onSendMessage(
+                              text: _textController.text,
+                            );
                             _textController.text = '';
                           },
                           icon: const Icon(Icons.send),
