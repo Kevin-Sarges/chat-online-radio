@@ -15,7 +15,10 @@ class ChatServices {
   }
 
   Future<void> sendMessage(String text) {
-    final data = db.collection('chatmessage').add({'message': text});
+    final data = db.collection('chatmessage').add({
+      'message': text,
+      'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
+    });
 
     return data;
   }

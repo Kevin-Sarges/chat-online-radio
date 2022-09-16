@@ -1,10 +1,11 @@
 // ignore_for_file: unrelated_type_equality_checks
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:desafio_radio/app/data/services/chat_firebase_services.dart';
 import 'package:desafio_radio/app/presenter/controllers/chat_controller.dart';
 import 'package:desafio_radio/app/presenter/controllers/chat_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -14,9 +15,11 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final googleSignIn = GoogleSignIn().currentUser;
+  final service = ChatServices();
   final chatController = ChatController();
   final TextEditingController _textController = TextEditingController();
+
+  List<QueryDocumentSnapshot> listMessages = [];
 
   @override
   void initState() {
@@ -92,9 +95,40 @@ class _ChatScreenState extends State<ChatScreen> {
             if (state is ChatSucess) {
               return Column(
                 children: [
-                  const Expanded(
+                  Expanded(
                     flex: 2,
-                    child: Text('Chat !!'),
+                    child: FutureBuilder<QuerySnapshot>(
+                      future: service.getMessage(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          listMessages = snapshot.data!.docs;
+
+                          if (listMessages.isNotEmpty) {
+                            final docs = snapshot.data!.docs;
+
+                            return ListView.builder(
+                                itemCount: docs.length,
+                                reverse: true,
+                                itemBuilder: (context, index) {
+                                  final data = docs[index].get('message');
+
+                                  return Text(data);
+                                });
+                          } else {
+                            return const Center(
+                              child: Text('Sem mensagem'),
+                            );
+                          }
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.red,
+                              strokeWidth: 5,
+                            ),
+                          );
+                        }
+                      },
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10),
