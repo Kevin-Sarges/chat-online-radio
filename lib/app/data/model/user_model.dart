@@ -6,10 +6,12 @@ class UserModel extends UserEntity {
     required String id,
     required String name,
     required String email,
+    required String photoUrl,
   }) : super(
           id: id,
           name: name,
           email: email,
+          photoUrl: photoUrl,
         );
 
   factory UserModel.fromJson(DocumentSnapshot snapshot) {
@@ -19,6 +21,7 @@ class UserModel extends UserEntity {
       id: snapshot.id,
       name: data['name'] as String,
       email: data['email'] as String,
+      photoUrl: data['photoUrl'] as String,
     );
   }
 
@@ -28,6 +31,7 @@ class UserModel extends UserEntity {
     data['id'] = id;
     data['name'] = name;
     data['email'] = email;
+    data['photoUrl'] = photoUrl;
 
     return data;
   }
