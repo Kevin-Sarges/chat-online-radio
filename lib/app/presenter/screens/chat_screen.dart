@@ -4,8 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:desafio_radio/app/data/services/chat_firebase_services.dart';
 import 'package:desafio_radio/app/presenter/controllers/chat_controller.dart';
 import 'package:desafio_radio/app/presenter/controllers/chat_state.dart';
+import 'package:desafio_radio/app/presenter/widgets/message_chat_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -97,8 +99,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: [
                   Expanded(
                     flex: 2,
-                    child: FutureBuilder<QuerySnapshot>(
-                      future: service.getMessage(),
+                    child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      stream: service.getMessage(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           listMessages = snapshot.data!.docs;
@@ -110,13 +112,18 @@ class _ChatScreenState extends State<ChatScreen> {
                                 itemCount: docs.length,
                                 reverse: true,
                                 itemBuilder: (context, index) {
-                                  final data = docs[index].get('message');
+                                  final data = docs[index].data();
 
-                                  return Text(data);
+                                  return MessageChatWidget(
+                                    text: data['message'],
+                                    name: 'Kevin Sarges',
+                                    photoUrl:
+                                        'https://lh3.googleusercontent.com/a/ALm5wu0jN9nkOFxj4R0iEMeo6ZiNsSkXhO0ZWmyMw87I=s288-p-rw-no-mo',
+                                  );
                                 });
                           } else {
                             return const Center(
-                              child: Text('Sem mensagem'),
+                              child: Text('Sem mensagens no momento !!'),
                             );
                           }
                         } else {
@@ -152,10 +159,16 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                         IconButton(
                           onPressed: () {
-                            chatController.onSendMessage(
-                              text: _textController.text,
-                            );
-                            _textController.text = '';
+                            if (_textController.text.isEmpty) {
+                              Fluttertoast.showToast(
+                                msg: 'Escreva alguma coisa !!',
+                              );
+                            } else {
+                              chatController.onSendMessage(
+                                text: _textController.text,
+                              );
+                              _textController.text = '';
+                            }
                           },
                           icon: const Icon(Icons.send),
                           color: Colors.blue,

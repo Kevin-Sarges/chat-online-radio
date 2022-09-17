@@ -46,7 +46,7 @@ class ChatController extends Cubit<ChatState> {
     emit(ChatLoading());
 
     try {
-      final result = await service.getMessage();
+      final result = service.getMessage();
 
       emit(ChatSucess(result));
     } catch (e) {

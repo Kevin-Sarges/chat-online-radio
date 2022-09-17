@@ -5,11 +5,11 @@ class ChatServices {
   final FirebaseFirestore db = FirebaseFirestore.instance;
   final GoogleSignIn googleUser = GoogleSignIn();
 
-  Future<QuerySnapshot> getMessage() async {
-    final getMessage = await db
+  Stream<QuerySnapshot<Map<String, dynamic>>> getMessage() {
+    final getMessage = db
         .collection('chatmessage')
         .orderBy('timestamp', descending: true)
-        .get();
+        .snapshots();
 
     return getMessage;
   }
