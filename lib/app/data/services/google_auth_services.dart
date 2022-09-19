@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:desafio_radio/app/data/model/user_model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,7 +19,7 @@ class GoogleAuthFirebase {
     return userIsLoggerIn;
   }
 
-  Future<bool> signIn() async {
+  Future<Object?> signIn() async {
     try {
       final GoogleSignInAccount? _googleSignUser = await googleSignIn.signIn();
       final GoogleSignInAuthentication? _googleAuth =
@@ -34,43 +33,49 @@ class GoogleAuthFirebase {
       User? firebaseUser =
           (await firebaseAuth.signInWithCredential(credential)).user;
 
-      final QuerySnapshot result = await db
-          .collection('users')
-          .where('id', isEqualTo: firebaseUser!.uid)
-          .get();
+      return firebaseUser;
 
-      final List<DocumentSnapshot> document = result.docs;
+      // final QuerySnapshot result = await db
+      //     .collection('users')
+      //     .where('id', isEqualTo: firebaseUser!.uid)
+      //     .get();
 
-      if (document.isEmpty) {
-        db.collection('users').doc(firebaseUser.uid).set(
-          {
-            'id': firebaseUser.uid,
-            'name': firebaseUser.displayName,
-            'emial': firebaseUser.email,
-            'photoUrl': firebaseUser.photoURL,
-          },
-        );
+      // final List<DocumentSnapshot> document = result.docs;
 
-        User? currentUser = firebaseUser;
+      // if (document.isEmpty) {
+      //   db.collection('users').doc(firebaseUser.uid).set(
+      //     {
+      //       'id': firebaseUser.uid,
+      //       'name': firebaseUser.displayName,
+      //       'emial': firebaseUser.email,
+      //       'photoUrl': firebaseUser.photoURL,
+      //     },
+      //   );
 
-        await preferences.setString('id', currentUser.uid);
-        await preferences.setString('name', currentUser.displayName ?? '');
-        await preferences.setString('email', currentUser.email ?? '');
-        await preferences.setString('photoUrl', currentUser.photoURL ?? '');
-      } else {
-        DocumentSnapshot documentSnapshot = document[0];
+      //   User? currentUser = firebaseUser;
 
-        UserModel userChat = UserModel.fromJson(documentSnapshot);
+      //   await preferences.setString('id', currentUser.uid);
+      //   await preferences.setString('name', currentUser.displayName ?? '');
+      //   await preferences.setString('email', currentUser.email ?? '');
+      //   await preferences.setString('photoUrl', currentUser.photoURL ?? '');
 
-        await preferences.setString('id', userChat.id);
-        await preferences.setString('name', userChat.name);
-        await preferences.setString('email', userChat.email);
-        await preferences.setString('photoUrl', userChat.photoUrl);
-      }
+      //   print(firebaseUser.email);
+      //   return currentUser;
+      // } else {
+      //   DocumentSnapshot documentSnapshot = document[0];
 
-      return true;
+      //   UserModel userChat = UserModel.fromJson(documentSnapshot);
+
+      //   await preferences.setString('id', userChat.id);
+      //   await preferences.setString('name', userChat.name);
+      //   await preferences.setString('email', userChat.email);
+      //   await preferences.setString('photoUrl', userChat.photoUrl);
+
+      //   print(firebaseUser.email);
+      //   return userChat;
+      // }
     } catch (e) {
-      return false;
+      return e;
     }
   }
 }
