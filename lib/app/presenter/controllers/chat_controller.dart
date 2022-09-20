@@ -1,11 +1,15 @@
 import 'package:desafio_radio/app/data/services/chat_firebase_services.dart';
 import 'package:desafio_radio/app/data/services/google_auth_services.dart';
 import 'package:desafio_radio/app/presenter/controllers/chat_state.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatController extends Cubit<ChatState> {
   final service = ChatServices();
   final isLoagger = GoogleAuthFirebase();
+
+  final getMessage = ChatServices().getMessage();
+  final User? user = FirebaseAuth.instance.currentUser;
 
   ChatController() : super(ChatInital());
 
@@ -13,8 +17,7 @@ class ChatController extends Cubit<ChatState> {
     emit(ChatLoading());
 
     try {
-      var data = await isLoagger.signIn();
-      print(data);
+      await isLoagger.signIn();
 
       _listMessage();
     } catch (e) {
@@ -47,7 +50,7 @@ class ChatController extends Cubit<ChatState> {
     emit(ChatLoading());
 
     try {
-      final result = service.getMessage();
+      final result = getMessage;
 
       emit(ChatSucess(result));
     } catch (e) {
@@ -57,9 +60,17 @@ class ChatController extends Cubit<ChatState> {
     }
   }
 
-  Future<void> onSendMessage({required String text}) async {
+  Future<void> onSendMessage({
+    required String? name,
+    required String? photoUrl,
+    required String text,
+  }) async {
     try {
-      final result = service.sendMessage(text);
+      final result = service.sendMessage(
+        name,
+        photoUrl,
+        text,
+      );
 
       emit(ChatSucess(result));
     } catch (e) {

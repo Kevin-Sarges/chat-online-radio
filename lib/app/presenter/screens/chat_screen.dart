@@ -1,7 +1,6 @@
 // ignore_for_file: unrelated_type_equality_checks
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:desafio_radio/app/data/services/chat_firebase_services.dart';
 import 'package:desafio_radio/app/presenter/controllers/chat_controller.dart';
 import 'package:desafio_radio/app/presenter/controllers/chat_state.dart';
 import 'package:desafio_radio/app/presenter/widgets/message_chat_widget.dart';
@@ -17,7 +16,6 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final service = ChatServices();
   final chatController = ChatController();
   final TextEditingController _textController = TextEditingController();
 
@@ -26,7 +24,9 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
+
     chatController.checkLogin();
+    chatController.user;
   }
 
   @override
@@ -100,7 +100,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   Expanded(
                     flex: 2,
                     child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                      stream: service.getMessage(),
+                      stream: chatController.getMessage,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           listMessages = snapshot.data!.docs;
@@ -116,9 +116,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
                                   return MessageChatWidget(
                                     text: data['message'],
-                                    name: 'Kevin Sarges',
-                                    photoUrl:
-                                        'https://lh3.googleusercontent.com/a/ALm5wu0jN9nkOFxj4R0iEMeo6ZiNsSkXhO0ZWmyMw87I=s288-p-rw-no-mo',
+                                    name: data['name'],
+                                    photoUrl: data['photoUrl'],
                                   );
                                 });
                           } else {
@@ -152,6 +151,8 @@ class _ChatScreenState extends State<ChatScreen> {
                             ),
                             onSubmitted: (value) {
                               chatController.onSendMessage(
+                                name: chatController.user?.displayName,
+                                photoUrl: chatController.user?.photoURL,
                                 text: _textController.text,
                               );
                             },
@@ -165,6 +166,8 @@ class _ChatScreenState extends State<ChatScreen> {
                               );
                             } else {
                               chatController.onSendMessage(
+                                name: chatController.user?.displayName,
+                                photoUrl: chatController.user?.photoURL,
                                 text: _textController.text,
                               );
                               _textController.text = '';
