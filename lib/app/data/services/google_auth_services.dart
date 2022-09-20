@@ -34,46 +34,6 @@ class GoogleAuthFirebase {
           (await firebaseAuth.signInWithCredential(credential)).user;
 
       return firebaseUser;
-
-      // final QuerySnapshot result = await db
-      //     .collection('users')
-      //     .where('id', isEqualTo: firebaseUser!.uid)
-      //     .get();
-
-      // final List<DocumentSnapshot> document = result.docs;
-
-      // if (document.isEmpty) {
-      //   db.collection('users').doc(firebaseUser.uid).set(
-      //     {
-      //       'id': firebaseUser.uid,
-      //       'name': firebaseUser.displayName,
-      //       'emial': firebaseUser.email,
-      //       'photoUrl': firebaseUser.photoURL,
-      //     },
-      //   );
-
-      //   User? currentUser = firebaseUser;
-
-      //   await preferences.setString('id', currentUser.uid);
-      //   await preferences.setString('name', currentUser.displayName ?? '');
-      //   await preferences.setString('email', currentUser.email ?? '');
-      //   await preferences.setString('photoUrl', currentUser.photoURL ?? '');
-
-      //   print(firebaseUser.email);
-      //   return currentUser;
-      // } else {
-      //   DocumentSnapshot documentSnapshot = document[0];
-
-      //   UserModel userChat = UserModel.fromJson(documentSnapshot);
-
-      //   await preferences.setString('id', userChat.id);
-      //   await preferences.setString('name', userChat.name);
-      //   await preferences.setString('email', userChat.email);
-      //   await preferences.setString('photoUrl', userChat.photoUrl);
-
-      //   print(firebaseUser.email);
-      //   return userChat;
-      // }
     } catch (e) {
       return e;
     }
