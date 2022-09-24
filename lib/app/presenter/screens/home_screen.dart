@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -15,6 +16,8 @@ class HomeScreen extends StatelessWidget {
       ),
     ),
   );
+
+  final player = AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,12 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      String url =
+                          'http://ia802708.us.archive.org/3/items/count_monte_cristo_0711_librivox/count_of_monte_cristo_001_dumas.mp3';
+
+                      await player.setSourceUrl(url);
+                    },
                     child: Row(
                       children: const [
                         Icon(Icons.play_arrow),
@@ -58,7 +66,9 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      player.release();
+                    },
                     child: Row(
                       children: const [
                         Icon(Icons.pause),
