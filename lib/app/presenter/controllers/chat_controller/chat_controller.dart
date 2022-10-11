@@ -1,6 +1,6 @@
 import 'package:desafio_radio/app/data/services/chat_firebase_services.dart';
 import 'package:desafio_radio/app/data/services/google_auth_services.dart';
-import 'package:desafio_radio/app/presenter/controllers/chat_state.dart';
+import 'package:desafio_radio/app/presenter/controllers/chat_controller/chat_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

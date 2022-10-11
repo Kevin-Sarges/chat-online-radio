@@ -1,8 +1,8 @@
 // ignore_for_file: unrelated_type_equality_checks
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:desafio_radio/app/presenter/controllers/chat_controller.dart';
-import 'package:desafio_radio/app/presenter/controllers/chat_state.dart';
+import 'package:desafio_radio/app/presenter/controllers/chat_controller/chat_controller.dart';
+import 'package:desafio_radio/app/presenter/controllers/chat_controller/chat_state.dart';
 import 'package:desafio_radio/app/presenter/widgets/message_chat_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

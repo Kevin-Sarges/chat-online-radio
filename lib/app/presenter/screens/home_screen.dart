@@ -47,6 +47,8 @@ class HomeScreen extends StatelessWidget {
                           'http://ia802708.us.archive.org/3/items/count_monte_cristo_0711_librivox/count_of_monte_cristo_001_dumas.mp3';
 
                       await player.setSourceUrl(url);
+
+                      player.resume();
                     },
                     child: Row(
                       children: const [
@@ -67,7 +69,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      player.release();
+                      player.pause();
                     },
                     child: Row(
                       children: const [

@@ -1,4 +1,4 @@
-import 'package:desafio_radio/app/presenter/controllers/chat_controller.dart';
+import 'package:desafio_radio/app/presenter/controllers/chat_controller/chat_controller.dart';
 import 'package:desafio_radio/app/presenter/screens/chat_screen.dart';
 import 'package:desafio_radio/app/presenter/screens/home_screen.dart';
 import 'package:flutter/material.dart';
