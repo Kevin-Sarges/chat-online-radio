@@ -69,7 +69,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      player.pause();
+                      player.stop();
                     },
                     child: Row(
                       children: const [

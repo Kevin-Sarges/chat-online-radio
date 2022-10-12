@@ -8,8 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class HomeController extends Cubit<HomeState> {
   HomeController() : super(HomeInitial());
 
-  final player = AudioPlayer();
-  final audioService = AudioAppImpl();
+  final audioService = AudioAppImpl(player: AudioPlayer());
 
   Future<void> _setUrlPlayer() async {
     emit(HomeLoading());
