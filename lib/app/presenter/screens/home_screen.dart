@@ -1,8 +1,12 @@
-import 'package:audioplayers/audioplayers.dart';
+import 'package:desafio_radio/app/data/datasoucer/audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
+
+  // final homeController = HomeController();
+  final controllerAudio = GetIt.I.get<AudioApp>();
 
   final Widget _gradient = Container(
     decoration: const BoxDecoration(
@@ -16,8 +20,6 @@ class HomeScreen extends StatelessWidget {
       ),
     ),
   );
-
-  final player = AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +45,7 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () async {
-                      String url =
-                          'http://ia802708.us.archive.org/3/items/count_monte_cristo_0711_librivox/count_of_monte_cristo_001_dumas.mp3';
-
-                      await player.setSourceUrl(url);
-
-                      player.resume();
+                      await controllerAudio.playerAudio();
                     },
                     child: Row(
                       children: const [
@@ -69,7 +66,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      player.stop();
+                      controllerAudio.stopAudio();
                     },
                     child: Row(
                       children: const [
@@ -91,7 +88,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

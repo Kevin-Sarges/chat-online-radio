@@ -16,11 +16,12 @@ class AudioAppImpl implements AudioApp {
 
   @override
   Future<void> playerAudio() async {
+    setAudioPlayer();
     return await player.resume();
   }
 
   @override
-  Future<void> pauseAudio() async {
-    return await player.pause();
+  Future<void> stopAudio() async {
+    return await player.stop();
   }
 }

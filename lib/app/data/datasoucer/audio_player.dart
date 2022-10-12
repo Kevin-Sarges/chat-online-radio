@@ -1,5 +1,5 @@
 abstract class AudioApp {
   Future<void> setAudioPlayer();
   Future<void> playerAudio();
-  Future<void> pauseAudio();
+  Future<void> stopAudio();
 }

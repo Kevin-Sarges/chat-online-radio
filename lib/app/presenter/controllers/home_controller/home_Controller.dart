@@ -35,11 +35,11 @@ class HomeController extends Cubit<HomeState> {
     }
   }
 
-  Future<void> pause() async {
+  Future<void> stopAudio() async {
     emit(HomeLoading());
 
     try {
-      await audioService.pauseAudio();
+      await audioService.stopAudio();
     } catch (e) {
       emit(HomeError(
         'Erro na url do audio !!',
